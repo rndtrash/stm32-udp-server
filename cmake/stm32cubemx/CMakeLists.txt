@@ -96,52 +96,52 @@ target_sources(stm32cubemx INTERFACE
     ../../Middlewares/Third_Party/LwIP/src/netif/slipif.c
     ../../Middlewares/Third_Party/LwIP/src/netif/zepif.c
     ../../Middlewares/Third_Party/LwIP/src/netif/ppp/ecp.c
-    ../../Middlewares/Third_Party/LwIP/src/api/netifapi.c
-    ../../Middlewares/Third_Party/LwIP/src/api/tcpip.c
-    ../../Middlewares/Third_Party/LwIP/src/api/netdb.c
-    ../../Middlewares/Third_Party/LwIP/src/api/if_api.c
-    ../../Middlewares/Third_Party/LwIP/src/api/api_msg.c
-    ../../Middlewares/Third_Party/LwIP/src/api/sockets.c
-    ../../Middlewares/Third_Party/LwIP/src/api/err.c
     ../../Middlewares/Third_Party/LwIP/src/api/api_lib.c
     ../../Middlewares/Third_Party/LwIP/src/api/netbuf.c
-    ../../Middlewares/Third_Party/LwIP/src/core/tcp_in.c
-    ../../Middlewares/Third_Party/LwIP/src/core/stats.c
-    ../../Middlewares/Third_Party/LwIP/src/core/tcp_out.c
+    ../../Middlewares/Third_Party/LwIP/src/api/tcpip.c
+    ../../Middlewares/Third_Party/LwIP/src/api/netifapi.c
+    ../../Middlewares/Third_Party/LwIP/src/api/api_msg.c
+    ../../Middlewares/Third_Party/LwIP/src/api/if_api.c
+    ../../Middlewares/Third_Party/LwIP/src/api/err.c
+    ../../Middlewares/Third_Party/LwIP/src/api/netdb.c
+    ../../Middlewares/Third_Party/LwIP/src/api/sockets.c
     ../../Middlewares/Third_Party/LwIP/src/core/tcp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/udp.c
     ../../Middlewares/Third_Party/LwIP/src/core/def.c
-    ../../Middlewares/Third_Party/LwIP/src/core/timeouts.c
-    ../../Middlewares/Third_Party/LwIP/src/core/raw.c
-    ../../Middlewares/Third_Party/LwIP/src/core/altcp.c
-    ../../Middlewares/Third_Party/LwIP/src/core/altcp_alloc.c
-    ../../Middlewares/Third_Party/LwIP/src/core/pbuf.c
+    ../../Middlewares/Third_Party/LwIP/src/core/sys.c
+    ../../Middlewares/Third_Party/LwIP/src/core/netif.c
+    ../../Middlewares/Third_Party/LwIP/src/core/stats.c
     ../../Middlewares/Third_Party/LwIP/src/core/init.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ip.c
+    ../../Middlewares/Third_Party/LwIP/src/core/tcp_in.c
+    ../../Middlewares/Third_Party/LwIP/src/core/mem.c
+    ../../Middlewares/Third_Party/LwIP/src/core/altcp_alloc.c
+    ../../Middlewares/Third_Party/LwIP/src/core/tcp_out.c
+    ../../Middlewares/Third_Party/LwIP/src/core/pbuf.c
+    ../../Middlewares/Third_Party/LwIP/src/core/timeouts.c
+    ../../Middlewares/Third_Party/LwIP/src/core/altcp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/memp.c
     ../../Middlewares/Third_Party/LwIP/src/core/altcp_tcp.c
     ../../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c
-    ../../Middlewares/Third_Party/LwIP/src/core/udp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/raw.c
     ../../Middlewares/Third_Party/LwIP/src/core/dns.c
-    ../../Middlewares/Third_Party/LwIP/src/core/mem.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ip.c
-    ../../Middlewares/Third_Party/LwIP/src/core/netif.c
-    ../../Middlewares/Third_Party/LwIP/src/core/sys.c
-    ../../Middlewares/Third_Party/LwIP/src/core/memp.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_addr.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/dhcp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_frag.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv4/autoip.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/icmp.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/igmp.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv4/etharp.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6_frag.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/icmp6.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6_addr.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/inet6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/igmp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/dhcp.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_addr.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv4/icmp.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ethip6.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/nd6.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv6/mld6.c
-    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/inet6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6_addr.c
     ../../Middlewares/Third_Party/LwIP/src/core/ipv6/dhcp6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/nd6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/icmp6.c
+    ../../Middlewares/Third_Party/LwIP/src/core/ipv6/ip6_frag.c
     ../../Middlewares/Third_Party/LwIP/src/apps/mqtt/mqtt.c
     ../../Core/Src/sysmem.c
     ../../Core/Src/syscalls.c

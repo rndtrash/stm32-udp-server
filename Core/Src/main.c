@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,19 +43,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-static struct netconn *conn;
-static struct netbuf *buf;
-static ip_addr_t *addr;
-static unsigned short port;
-char msg[100];
-char smsg[200];
+struct udp_pcb *upcb;
+const char *helloWorld = "Hello, world!";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
 static void MX_GPIO_Init(void);
+
 /* USER CODE BEGIN PFP */
+void udp_hello_world(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
 
 /* USER CODE END PFP */
 
@@ -69,7 +67,6 @@ extern struct netif gnetif;
   * @retval int
   */
 int main(void) {
-
     /* USER CODE BEGIN 1 */
 
     /* USER CODE END 1 */
@@ -94,15 +91,20 @@ int main(void) {
     MX_GPIO_Init();
     MX_LWIP_Init();
     /* USER CODE BEGIN 2 */
+    upcb = udp_new();
 
+    // udp_bind(upcb, netif_ip4_addr(&gnetif), 31337);
+    udp_bind(upcb, IP_ADDR_ANY, 31337);
+    udp_recv(upcb, udp_hello_world, NULL);
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE END WHILE */
-        MX_LWIP_Process();
+
         /* USER CODE BEGIN 3 */
+        MX_LWIP_Process();
     }
     /* USER CODE END 3 */
 }
@@ -164,8 +166,8 @@ void SystemClock_Config(void) {
   */
 static void MX_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+    /* USER CODE BEGIN MX_GPIO_Init_1 */
+    /* USER CODE END MX_GPIO_Init_1 */
 
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -213,60 +215,27 @@ static void MX_GPIO_Init(void) {
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(USB_VBUS_GPIO_Port, &GPIO_InitStruct);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+    /* USER CODE BEGIN MX_GPIO_Init_2 */
+    /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-static void udp_thread() {
-    err_t err, recv_err;
-    struct pbuf *txBuf;
+void udp_hello_world(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port) {
+    struct pbuf *pHelloWorld = pbuf_alloc(PBUF_TRANSPORT, strlen(helloWorld), PBUF_POOL);
+    if (pHelloWorld == NULL)
+        Error_Handler();
 
-    /* Create a new connection identifier */
-    conn = netconn_new(NETCONN_UDP);
+    pbuf_take(pHelloWorld, helloWorld, strlen(helloWorld));
 
-    if (conn != NULL) {
-        /* Bind connection to the port 7 */
-        err = netconn_bind(conn, IP_ADDR_ANY, 7);
+    udp_connect(pcb, addr, port);
+    // udp_send(pcb, p);
+    udp_send(pcb, pHelloWorld);
+    udp_disconnect(pcb);
 
-        if (err == ERR_OK) {
-            /* The while loop will run everytime this Task is executed */
-            while (1) {
-                /* Receive the data from the connection */
-                recv_err = netconn_recv(conn, &buf);
-
-                if (recv_err == ERR_OK) // if the data is received
-                {
-                    addr = netbuf_fromaddr(buf);  // get the address of the client
-                    port = netbuf_fromport(buf);  // get the Port of the client
-                    strcpy(msg, buf->p->payload);   // get the message from the client
-
-                    // Or modify the message received, so that we can send it back to the client
-                    int len = sprintf(smsg, "\"%s\" was sent by the Client\n", (char *) buf->p->payload);
-
-                    /* allocate pbuf from RAM*/
-                    txBuf = pbuf_alloc(PBUF_TRANSPORT, len, PBUF_RAM);
-
-                    /* copy the data into the buffer  */
-                    pbuf_take(txBuf, smsg, len);
-
-                    // refer the nebuf->pbuf to our pbuf
-                    buf->p = txBuf;
-
-                    netconn_connect(conn, addr, port);  // connect to the destination address and port
-
-                    netconn_send(conn, buf);  // send the netbuf to the client
-
-                    buf->addr.addr = 0;  // clear the address
-                    pbuf_free(txBuf);   // clear the pbuf
-                    netbuf_delete(buf);  // delete the netbuf
-                }
-            }
-        } else {
-            netconn_delete(conn);
-        }
-    }
+    pbuf_free(pHelloWorld);
+    pbuf_free(p);
 }
+
 /* USER CODE END 4 */
 
 /**
